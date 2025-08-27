@@ -33,8 +33,12 @@
                     <button id="start-estimation" class="action-btn primary">Start</button>
                     
                     <div id="estimation-input" class="input-section" style="display: none;">
-                        <label for="guess-input">Your guess (seconds):</label>
-                        <input type="number" id="guess-input" min="1" max="60" step="0.1" placeholder="5.0">
+                        <label for="guess-slider">Your guess: <span id="guess-value">5.0</span> seconds</label>
+                        <div class="slider-container">
+                            <span class="slider-min">1s</span>
+                            <input type="range" id="guess-slider" min="1" max="20" step="0.1" value="5.0">
+                            <span class="slider-max">20s</span>
+                        </div>
                         <button id="submit-guess" class="action-btn primary">Submit Guess</button>
                     </div>
 
@@ -82,6 +86,35 @@
                     <div class="stat-item">Best Score: <span id="production-best">-</span></div>
                 </div>
             </div>
+            
+            <div class="visualization-section">
+                <h4>⚡ Time Perception Visualization</h4>
+                <div class="chart-controls">
+                    <button id="chart-estimation" class="chart-mode-btn active">Estimation Mode</button>
+                    <button id="chart-production" class="chart-mode-btn">Production Mode</button>
+                </div>
+                <div id="perception-chart" class="chart-container">
+                    <div class="chart-placeholder">
+                        <p>🎯 Play some games to see your time perception patterns!</p>
+                        <p>The chart will show how your perceived time compares to real time.</p>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color perfect"></div>
+                        <span>Perfect (±0.5s)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color good"></div>
+                        <span>Good (±1.5s)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color poor"></div>
+                        <span>Needs Practice (>1.5s)</span>
+                    </div>
+                </div>
+            </div>
+            
             <button id="reset-stats" class="action-btn secondary">Reset Statistics</button>
         </div>
     </div>
