@@ -593,53 +593,53 @@ header h1 {
     .container {
         padding: 15px;
     }
-    
+
     header h1 {
         font-size: 2rem;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .settings-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .tap-btn {
         width: 150px;
         height: 150px;
         font-size: 1.1rem;
     }
-    
+
     .mode-selector {
         flex-direction: column;
     }
-    
+
     .chart-container {
         height: 250px;
         padding: 15px;
     }
-    
+
     .chart-controls {
         flex-direction: column;
         gap: 5px;
     }
-    
+
     .chart-legend {
         gap: 15px;
     }
-    
+
     .slider-container {
         gap: 10px;
         padding: 0 5px;
     }
-    
+
     #guess-slider::-webkit-slider-thumb {
         width: 20px;
         height: 20px;
     }
-    
+
     #guess-slider::-moz-range-thumb {
         width: 20px;
         height: 20px;
@@ -650,71 +650,135 @@ header h1 {
     header {
         padding: 20px;
     }
-    
+
     .game-mode {
         padding: 20px;
     }
-    
+
     .tap-btn {
         width: 120px;
         height: 120px;
         font-size: 1rem;
     }
-    
+
     .chart-container {
         height: 200px;
         padding: 10px;
     }
-    
+
     .visualization-section {
         padding: 15px;
     }
-    
+
     .chart-legend {
         gap: 10px;
         font-size: 0.75rem;
     }
-    
+
     .legend-color {
         width: 10px;
         height: 10px;
     }
-    
+
     .slider-container {
         gap: 8px;
         padding: 0;
     }
-    
+
     .slider-min, .slider-max {
         font-size: 0.8rem;
         min-width: 20px;
     }
-    
+
     #guess-slider::-webkit-slider-thumb {
         width: 18px;
         height: 18px;
     }
-    
+
     #guess-slider::-moz-range-thumb {
         width: 18px;
         height: 18px;
     }
-    
+
     #guess-value {
         font-size: 1.1rem;
     }
-    
+
     .settings {
         padding: 20px;
     }
-    
+
     .setting-card {
         padding: 15px;
     }
-    
+
     .setting-item {
         margin: 12px 0;
     }
+
+    .cache-control {
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    .cache-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        min-width: 180px;
+    }
+
+    .cache-note {
+        font-size: 0.8rem;
+    }
+}
+
+/* Cache Control Section */
+.cache-control {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.cache-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    margin-bottom: 10px;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.cache-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.cache-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.cache-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.cache-note {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    font-style: italic;
 }
 
 /* Animation for status changes */

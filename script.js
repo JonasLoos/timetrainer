@@ -8,7 +8,7 @@ class TimeTrainer {
         this.settings = this.loadSettings();
         this.currentGame = null;
         this.currentChartMode = 'estimation';
-        
+
         this.init();
     }
 
@@ -30,7 +30,7 @@ class TimeTrainer {
         document.getElementById('submit-guess').addEventListener('click', () => this.submitGuess());
         document.getElementById('next-estimation').addEventListener('click', () => this.nextEstimationRound());
 
-        // Production mode  
+        // Production mode
         document.getElementById('start-production').addEventListener('click', () => this.startProductionGame());
         document.getElementById('tap-button').addEventListener('click', () => this.handleTap());
         document.getElementById('next-production').addEventListener('click', () => this.nextProductionRound());
@@ -53,6 +53,9 @@ class TimeTrainer {
         document.getElementById('production-min').addEventListener('input', (e) => this.updateSetting('production', 'min', e.target.value));
         document.getElementById('production-max').addEventListener('input', (e) => this.updateSetting('production', 'max', e.target.value));
         document.getElementById('reset-settings').addEventListener('click', () => this.resetSettings());
+
+        // Cache management
+        document.getElementById('clear-cache').addEventListener('click', () => this.clearCacheAndRefresh());
     }
 
     async initializeAudio() {
@@ -85,15 +88,15 @@ class TimeTrainer {
 
     switchMode(mode) {
         this.currentMode = mode;
-        
+
         // Update mode buttons
         document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`${mode}-mode`).classList.add('active');
-        
+
         // Update game displays
         document.querySelectorAll('.game-mode').forEach(gameMode => gameMode.classList.remove('active'));
         document.getElementById(`${mode}-game`).classList.add('active');
-        
+
         // Reset current game
         this.currentGame = null;
         this.resetGameUI();
@@ -120,7 +123,7 @@ class TimeTrainer {
     // ESTIMATION MODE METHODS
     startEstimationGame() {
         const targetTime = this.generateRandomTime(this.settings.estimation.min, this.settings.estimation.max);
-        
+
         this.currentGame = {
             mode: 'estimation',
             targetTime: targetTime,
@@ -160,15 +163,15 @@ class TimeTrainer {
     displayEstimationResult(guess, actual, error, accuracy) {
         const resultDiv = document.getElementById('estimation-result');
         const resultContent = resultDiv.querySelector('.result-content');
-        
+
         let resultClass = 'poor';
         let message = '';
-        
+
         if (error <= 0.5) {
             resultClass = 'success';
             message = '🎯 Excellent!';
         } else if (error <= 1.5) {
-            resultClass = 'good'; 
+            resultClass = 'good';
             message = '👍 Good!';
         } else {
             message = '📈 Keep practicing!';
@@ -203,7 +206,7 @@ class TimeTrainer {
     // PRODUCTION MODE METHODS
     startProductionGame() {
         const targetTime = this.generateRandomTime(this.settings.production.min, this.settings.production.max);
-        
+
         this.currentGame = {
             mode: 'production',
             targetTime: targetTime,
@@ -230,10 +233,10 @@ class TimeTrainer {
     displayProductionResult(elapsed, target, error, accuracy) {
         const resultDiv = document.getElementById('production-result');
         const resultContent = resultDiv.querySelector('.result-content');
-        
+
         let resultClass = 'poor';
         let message = '';
-        
+
         if (error <= 0.5) {
             resultClass = 'success';
             message = '🎯 Perfect timing!';
@@ -277,7 +280,7 @@ class TimeTrainer {
     updateEstimationStatistics(error, accuracy) {
         const actualTime = this.currentGame.targetTime;
         const guess = parseFloat(document.getElementById('guess-slider').value);
-        
+
         // Store individual game result for visualization
         this.statistics.estimation.gameResults.push({
             actualTime: actualTime,
@@ -286,16 +289,16 @@ class TimeTrainer {
             accuracy: accuracy,
             timestamp: Date.now()
         });
-        
+
         // Keep only last 50 games for performance
         if (this.statistics.estimation.gameResults.length > 50) {
             this.statistics.estimation.gameResults = this.statistics.estimation.gameResults.slice(-50);
         }
-        
+
         this.statistics.estimation.games++;
         this.statistics.estimation.totalError += error;
         this.statistics.estimation.avgError = this.statistics.estimation.totalError / this.statistics.estimation.games;
-        
+
         if (!this.statistics.estimation.bestScore || error < this.statistics.estimation.bestScore) {
             this.statistics.estimation.bestScore = error;
         }
@@ -308,7 +311,7 @@ class TimeTrainer {
     updateProductionStatistics(error, accuracy) {
         const actualTime = this.currentGame.targetTime;
         const elapsed = (Date.now() - this.currentGame.startTime) / 1000;
-        
+
         // Store individual game result for visualization
         this.statistics.production.gameResults.push({
             actualTime: actualTime,
@@ -317,16 +320,16 @@ class TimeTrainer {
             accuracy: accuracy,
             timestamp: Date.now()
         });
-        
+
         // Keep only last 50 games for performance
         if (this.statistics.production.gameResults.length > 50) {
             this.statistics.production.gameResults = this.statistics.production.gameResults.slice(-50);
         }
-        
+
         this.statistics.production.games++;
         this.statistics.production.totalError += error;
         this.statistics.production.avgError = this.statistics.production.totalError / this.statistics.production.games;
-        
+
         if (!this.statistics.production.bestScore || error < this.statistics.production.bestScore) {
             this.statistics.production.bestScore = error;
         }
@@ -339,16 +342,16 @@ class TimeTrainer {
     updateStatisticsDisplay() {
         // Estimation stats
         document.getElementById('estimation-games').textContent = this.statistics.estimation.games;
-        document.getElementById('estimation-error').textContent = 
+        document.getElementById('estimation-error').textContent =
             this.statistics.estimation.games > 0 ? `${this.statistics.estimation.avgError.toFixed(1)}s` : '0.0s';
-        document.getElementById('estimation-best').textContent = 
+        document.getElementById('estimation-best').textContent =
             this.statistics.estimation.bestScore ? `${this.statistics.estimation.bestScore.toFixed(1)}s` : '-';
 
-        // Production stats  
+        // Production stats
         document.getElementById('production-games').textContent = this.statistics.production.games;
-        document.getElementById('production-error').textContent = 
+        document.getElementById('production-error').textContent =
             this.statistics.production.games > 0 ? `${this.statistics.production.avgError.toFixed(1)}s` : '0.0s';
-        document.getElementById('production-best').textContent = 
+        document.getElementById('production-best').textContent =
             this.statistics.production.bestScore ? `${this.statistics.production.bestScore.toFixed(1)}s` : '-';
     }
 
@@ -373,9 +376,9 @@ class TimeTrainer {
         try {
             const saved = localStorage.getItem('timetrainer-stats');
             if (!saved) return defaultStats;
-            
+
             const loadedStats = JSON.parse(saved);
-            
+
             // Migration: Ensure gameResults arrays exist for backward compatibility
             if (!loadedStats.estimation.gameResults) {
                 loadedStats.estimation.gameResults = [];
@@ -383,7 +386,7 @@ class TimeTrainer {
             if (!loadedStats.production.gameResults) {
                 loadedStats.production.gameResults = [];
             }
-            
+
             return loadedStats;
         } catch (error) {
             console.warn('Failed to load statistics:', error);
@@ -414,18 +417,18 @@ class TimeTrainer {
     // VISUALIZATION METHODS
     switchChartMode(mode) {
         this.currentChartMode = mode;
-        
+
         // Update chart mode buttons
         document.querySelectorAll('.chart-mode-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`chart-${mode}`).classList.add('active');
-        
+
         this.updateVisualization();
     }
 
     updateVisualization() {
         const data = this.statistics[this.currentChartMode].gameResults;
         const container = document.getElementById('perception-chart');
-        
+
         if (!data || data.length === 0) {
             container.innerHTML = `
                 <div class="chart-placeholder">
@@ -459,7 +462,7 @@ class TimeTrainer {
         const perceivedTimes = data.map(d => d.perceivedTime);
         const minTime = Math.min(...actualTimes, ...perceivedTimes);
         const maxTime = Math.max(...actualTimes, ...perceivedTimes);
-        
+
         // Add some padding to the bounds
         const padding = (maxTime - minTime) * 0.1;
         const xMin = Math.max(0, minTime - padding);
@@ -499,14 +502,14 @@ class TimeTrainer {
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             const x = xScale(point.actualTime);
             const y = yScale(point.perceivedTime);
-            
+
             circle.setAttribute('class', 'chart-point');
             circle.setAttribute('cx', x);
             circle.setAttribute('cy', y);
             circle.setAttribute('r', 4);
             circle.setAttribute('stroke', '#fff');
             circle.setAttribute('stroke-width', 1);
-            
+
             // Color based on accuracy
             let color;
             if (point.error <= 0.5) {
@@ -635,13 +638,13 @@ class TimeTrainer {
             tooltip = document.createElement('div');
             tooltip.className = 'chart-tooltip';
             tooltip.textContent = tooltipText;
-            
+
             // Position tooltip with better offset
             const rect = e.target.getBoundingClientRect();
             tooltip.style.left = (rect.left + rect.width / 2) + 'px';
             tooltip.style.top = (rect.top - 10) + 'px';
             tooltip.style.position = 'fixed';
-            
+
             document.body.appendChild(tooltip);
         });
 
@@ -702,7 +705,7 @@ class TimeTrainer {
         if (!coefficients) return null;
 
         const { a, b, c } = coefficients;
-        
+
         // Generate points for the curve
         const steps = 50;
         const stepSize = (xMax - xMin) / steps;
@@ -710,14 +713,14 @@ class TimeTrainer {
 
         // Start from origin (0,0) and go to xMax
         const actualSteps = Math.ceil((xMax - 0) / stepSize);
-        
+
         // Always start at origin
         pathPoints.push([xScale(0), yScale(0)]);
-        
+
         for (let i = 1; i <= actualSteps; i++) {
             const x = i * stepSize;
             if (x > xMax) break;
-            
+
             const y = a * x * x + b * x + c;
             pathPoints.push([xScale(x), yScale(y)]);
         }
@@ -727,12 +730,12 @@ class TimeTrainer {
         // Create SVG path element
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('class', 'chart-bestfit');
-        
+
         let pathData = `M ${pathPoints[0][0]} ${pathPoints[0][1]}`;
         for (let i = 1; i < pathPoints.length; i++) {
             pathData += ` L ${pathPoints[i][0]} ${pathPoints[i][1]}`;
         }
-        
+
         path.setAttribute('d', pathData);
         return path;
     }
@@ -753,9 +756,9 @@ class TimeTrainer {
         try {
             const saved = localStorage.getItem('timetrainer-settings');
             if (!saved) return defaultSettings;
-            
+
             const loadedSettings = JSON.parse(saved);
-            
+
             // Validate and merge with defaults
             return {
                 estimation: {
@@ -784,7 +787,7 @@ class TimeTrainer {
     updateSetting(mode, type, value) {
         const numValue = parseFloat(value);
         this.settings[mode][type] = numValue;
-        
+
         // Ensure min <= max
         if (type === 'min' && numValue >= this.settings[mode].max) {
             this.settings[mode].max = numValue + 0.1;
@@ -795,10 +798,10 @@ class TimeTrainer {
             document.getElementById(`${mode}-min`).value = this.settings[mode].min;
             document.getElementById(`${mode}-min-value`).textContent = this.settings[mode].min.toFixed(1);
         }
-        
+
         document.getElementById(`${mode}-${type}-value`).textContent = numValue.toFixed(1);
         this.saveSettings();
-        
+
         // Update guess slider range if estimation settings changed
         if (mode === 'estimation') {
             this.updateGuessSliderRange();
@@ -826,12 +829,12 @@ class TimeTrainer {
         const guessSlider = document.getElementById('guess-slider');
         const minLabel = document.getElementById('guess-min-label');
         const maxLabel = document.getElementById('guess-max-label');
-        
+
         guessSlider.min = this.settings.estimation.min;
         guessSlider.max = this.settings.estimation.max;
         minLabel.textContent = `${this.settings.estimation.min.toFixed(1)}s`;
         maxLabel.textContent = `${this.settings.estimation.max.toFixed(1)}s`;
-        
+
         // Reset slider value to middle if outside new range
         const currentValue = parseFloat(guessSlider.value);
         if (currentValue < this.settings.estimation.min || currentValue > this.settings.estimation.max) {
@@ -849,6 +852,48 @@ class TimeTrainer {
             };
             this.saveSettings();
             this.updateSettingsDisplay();
+        }
+    }
+
+    // CACHE MANAGEMENT METHODS
+    async clearCacheAndRefresh() {
+        const button = document.getElementById('clear-cache');
+        const originalText = button.textContent;
+
+        try {
+            // Update button to show progress
+            button.textContent = '⏳ Clearing cache...';
+            button.disabled = true;
+
+            // Send message to service worker to clear all caches
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+
+                // Wait a bit for cache clearing
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+
+            // Clear local storage as well
+            localStorage.clear();
+
+            // Update button text
+            button.textContent = '✅ Cache cleared! Refreshing...';
+
+            // Wait a moment then refresh
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+
+        } catch (error) {
+            console.error('Failed to clear cache:', error);
+            button.textContent = '❌ Error - Try again';
+            button.disabled = false;
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 3000);
         }
     }
 }

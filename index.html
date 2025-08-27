@@ -27,11 +27,11 @@
             <div id="estimation-game" class="game-mode active">
                 <h2>🎧 Time Estimation</h2>
                 <p class="instructions">Listen to two beeps. Guess how many seconds passed between them.</p>
-                
+
                 <div class="game-area">
                     <div id="estimation-status" class="status">Click "Start" to begin</div>
                     <button id="start-estimation" class="action-btn primary">Start</button>
-                    
+
                     <div id="estimation-input" class="input-section" style="display: none;">
                         <label for="guess-slider">Your guess: <span id="guess-value">5.0</span> seconds</label>
                         <div class="slider-container">
@@ -53,7 +53,7 @@
             <div id="production-game" class="game-mode">
                 <h2>👆 Time Production</h2>
                 <p class="instructions">Wait for the target time, then tap the button when you think it has passed.</p>
-                
+
                 <div class="game-area">
                     <div id="production-status" class="status">Click "Start" to begin</div>
                     <div id="target-time" class="target-time" style="display: none;">
@@ -61,7 +61,7 @@
                     </div>
                     <button id="start-production" class="action-btn primary">Start</button>
                     <button id="tap-button" class="tap-btn" style="display: none;">TAP NOW!</button>
-                    
+
                     <div id="production-result" class="result" style="display: none;">
                         <div class="result-content"></div>
                         <button id="next-production" class="action-btn">Next Round</button>
@@ -86,7 +86,7 @@
                     <div class="stat-item">Best Score: <span id="production-best">-</span></div>
                 </div>
             </div>
-            
+
             <div class="visualization-section">
                 <h4>⚡ Time Perception Visualization</h4>
                 <div class="chart-controls">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <button id="reset-stats" class="action-btn secondary">Reset Statistics</button>
         </div>
 
@@ -171,6 +171,14 @@
             <div class="settings-actions">
                 <button id="reset-settings" class="action-btn secondary">Reset to Defaults</button>
             </div>
+        </div>
+
+        <!-- Clear Cache Section -->
+        <div class="cache-control">
+            <button id="clear-cache" class="cache-btn">
+                🔄 Clear Cache & Refresh
+            </button>
+            <p class="cache-note">Clear app cache and get the latest version.</p>
         </div>
     </div>
 
