@@ -1,0 +1,80 @@
+{
+  "name": "Time Trainer - Perception Training",
+  "short_name": "Time Trainer",
+  "description": "Train your time perception skills with interactive games",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#667eea",
+  "orientation": "portrait-primary",
+  "categories": ["games", "education", "health"],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KICA8Y2lyY2xlIGN4PSIyNCIgY3k9IjI0IiByPSIyMiIgZmlsbD0iIzY2N2VlYSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIyNCIgeT0iMzIiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7ijbE8L3RleHQ+Cjwvc3ZnPg==",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8Y2lyY2xlIGN4PSI0OCIgY3k9IjQ4IiByPSI0NCIgZmlsbD0iIzY2N2VlYSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8dGV4dCB4PSI0OCIgeT0iNjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7ijbE8L3RleHQ+Cjwvc3ZnPg==",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPGNpcmNsZSBjeD0iOTYiIGN5PSI5NiIgcj0iODgiIGZpbGw9IiM2NjdlZWEiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPHRleHQgeD0iOTYiIHk9IjEyOCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOTYiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuKNsS08L3RleHQ+Cjwvc3ZnPg==",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyMzYiIGZpbGw9IiM2NjdlZWEiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyMCIvPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNTYiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuKNsS08L3RleHQ+Cjwvc3ZnPg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NDAiIGhlaWdodD0iNzIwIiB2aWV3Qm94PSIwIDAgNTQwIDcyMCI+CiAgPHJlY3Qgd2lkdGg9IjU0MCIgaGVpZ2h0PSI3MjAiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2N2VlYSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM3NjRiYTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHg9IjIwIiB5PSI2MCIgd2lkdGg9IjUwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIi8+CiAgPHRleHQgeD0iMjcwIiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjM2IiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5UaW1lIFRyYWluZXI8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjIwMCIgd2lkdGg9IjUwMCIgaGVpZ2h0PSI0MDAiIHJ4PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIi8+CiAgPHRleHQgeD0iMjcwIiB5PSIyNDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5UcmFpbiB5b3VyIHRpbWUgcGVyY2VwdGlvbjwvdGV4dD4KICA8Y2lyY2xlIGN4PSIyNzAiIGN5PSI0MDAiIHI9IjYwIiBmaWxsPSIjNjY3ZWVhIi8+CiAgPHRleHQgeD0iMjcwIiB5PSI0MTQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5TdGFydDwvdGV4dD4KPC9zdmc+",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgNzIwIDU0MCI+CiAgPHJlY3Qgd2lkdGg9IjcyMCIgaGVpZ2h0PSI1NDAiIGZpbGw9InVybCgjZ3JhZGllbnQyKSIvPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzc2NGJhMiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgeD0iNjAiIHk9IjIwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOSkiLz4KICA8dGV4dCB4PSIzNjAiIHk9IjgwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iIzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VGltZSBUcmFpbmVyIC0gVHJhaW4geW91ciB0aW1lIHBlcmNlcHRpb248L3RleHQ+CiAgPHJlY3QgeD0iNjAiIHk9IjE2MCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzNDAiIHJ4PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIi8+CiAgPGNpcmNsZSBjeD0iMzYwIiBjeT0iMzMwIiByPSI2MCIgZmlsbD0iIzY2N2VlYSIvPgogIDx0ZXh0IHg9IjM2MCIgeT0iMzQ0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGxheTwvdGV4dD4KPC9zdmc+",
+      "sizes": "720x540",
+      "type": "image/svg+xml", 
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Time Estimation",
+      "short_name": "Estimate",
+      "description": "Start time estimation game",
+      "url": "/?mode=estimation",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8Y2lyY2xlIGN4PSI0OCIgY3k9IjQ4IiByPSI0NCIgZmlsbD0iIzY2N2VlYSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8dGV4dCB4PSI0OCIgeT0iNjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn46nPC90ZXh0Pgo8L3N2Zz4=",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Time Production",
+      "short_name": "Produce", 
+      "description": "Start time production game",
+      "url": "/?mode=production",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8Y2lyY2xlIGN4PSI0OCIgY3k9IjQ4IiByPSI0NCIgZmlsbD0iIzY2N2VlYSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8dGV4dCB4PSI0OCIgeT0iNjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5GPPC90ZXh0Pgo8L3N2Zz4=",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

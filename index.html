@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time Perception Training - Improve your time perception skills">
+    <meta name="theme-color" content="#4f46e5">
+    <title>Time Trainer - Perception Training</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏱️</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏱️ Time Trainer</h1>
+            <p class="subtitle">Train your time perception skills</p>
+        </header>
+
+        <div class="mode-selector">
+            <button id="estimation-mode" class="mode-btn active">Time Estimation</button>
+            <button id="production-mode" class="mode-btn">Time Production</button>
+        </div>
+
+        <div class="game-container">
+            <!-- Time Estimation Mode -->
+            <div id="estimation-game" class="game-mode active">
+                <h2>🎧 Time Estimation</h2>
+                <p class="instructions">Listen to two beeps. Guess how many seconds passed between them.</p>
+                
+                <div class="game-area">
+                    <div id="estimation-status" class="status">Click "Start" to begin</div>
+                    <button id="start-estimation" class="action-btn primary">Start</button>
+                    
+                    <div id="estimation-input" class="input-section" style="display: none;">
+                        <label for="guess-input">Your guess (seconds):</label>
+                        <input type="number" id="guess-input" min="1" max="60" step="0.1" placeholder="5.0">
+                        <button id="submit-guess" class="action-btn primary">Submit Guess</button>
+                    </div>
+
+                    <div id="estimation-result" class="result" style="display: none;">
+                        <div class="result-content"></div>
+                        <button id="next-estimation" class="action-btn">Next Round</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Production Mode -->
+            <div id="production-game" class="game-mode">
+                <h2>👆 Time Production</h2>
+                <p class="instructions">Wait for the target time, then tap the button when you think it has passed.</p>
+                
+                <div class="game-area">
+                    <div id="production-status" class="status">Click "Start" to begin</div>
+                    <div id="target-time" class="target-time" style="display: none;">
+                        Target: <span id="target-seconds">5</span> seconds
+                    </div>
+                    <button id="start-production" class="action-btn primary">Start</button>
+                    <button id="tap-button" class="tap-btn" style="display: none;">TAP NOW!</button>
+                    
+                    <div id="production-result" class="result" style="display: none;">
+                        <div class="result-content"></div>
+                        <button id="next-production" class="action-btn">Next Round</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="statistics">
+            <h3>📊 Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Estimation Mode</h4>
+                    <div class="stat-item">Games: <span id="estimation-games">0</span></div>
+                    <div class="stat-item">Avg Error: <span id="estimation-error">0.0s</span></div>
+                    <div class="stat-item">Best Score: <span id="estimation-best">-</span></div>
+                </div>
+                <div class="stat-card">
+                    <h4>Production Mode</h4>
+                    <div class="stat-item">Games: <span id="production-games">0</span></div>
+                    <div class="stat-item">Avg Error: <span id="production-error">0.0s</span></div>
+                    <div class="stat-item">Best Score: <span id="production-best">-</span></div>
+                </div>
+            </div>
+            <button id="reset-stats" class="action-btn secondary">Reset Statistics</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
