@@ -459,6 +459,27 @@ header h1 {
     background: #dc3545;
 }
 
+.legend-line {
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+.legend-line.diagonal {
+    background: #999;
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        #999 2px,
+        #999 4px
+    );
+}
+
+.legend-line.bestfit {
+    background: #ff6b6b;
+}
+
 .chart-axis {
     stroke: #666;
     stroke-width: 1;
@@ -490,6 +511,13 @@ header h1 {
     stroke: #999;
     stroke-width: 2;
     stroke-dasharray: 5,5;
+}
+
+.chart-bestfit {
+    stroke: #ff6b6b;
+    stroke-width: 3;
+    fill: none;
+    opacity: 0.8;
 }
 
 .chart-tooltip {

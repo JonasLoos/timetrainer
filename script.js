@@ -475,6 +475,14 @@ class TimeTrainer {
         diagonalLine.setAttribute('y2', yScale(xMax));
         svg.appendChild(diagonalLine);
 
+        // Add quadratic best fit line if we have enough data points
+        if (data.length >= 2) {
+            const bestFitPath = this.createBestFitLine(data, xMin, xMax, xScale, yScale);
+            if (bestFitPath) {
+                svg.appendChild(bestFitPath);
+            }
+        }
+
         // Add data points
         data.forEach((point, index) => {
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -640,6 +648,82 @@ class TimeTrainer {
                 tooltip.style.top = (rect.top - 10) + 'px';
             }
         });
+    }
+
+    // QUADRATIC REGRESSION METHODS (constrained to pass through origin)
+    calculateQuadraticRegression(data) {
+        const n = data.length;
+        if (n < 2) return null;
+
+        // Extract x (actualTime) and y (perceivedTime) values
+        const x = data.map(d => d.actualTime);
+        const y = data.map(d => d.perceivedTime);
+
+        // For quadratic through origin: y = ax² + bx (c = 0)
+        // Calculate sums for normal equations
+        const sumX2 = x.reduce((a, b) => a + b * b, 0);
+        const sumX3 = x.reduce((a, b) => a + b * b * b, 0);
+        const sumX4 = x.reduce((a, b) => a + b * b * b * b, 0);
+        const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
+        const sumX2Y = x.reduce((sum, xi, i) => sum + xi * xi * y[i], 0);
+
+        // Set up 2x2 matrix equation: [A][coefficients] = [B]
+        // Σ(x⁴)a + Σ(x³)b = Σ(x²y)
+        // Σ(x³)a + Σ(x²)b = Σ(xy)
+        const A = [
+            [sumX4, sumX3],
+            [sumX3, sumX2]
+        ];
+        const B = [sumX2Y, sumXY];
+
+        // Solve using Cramer's rule for 2x2 system
+        const detA = A[0][0] * A[1][1] - A[0][1] * A[1][0];
+        if (Math.abs(detA) < 1e-10) return null; // Matrix is singular
+
+        const a = (B[0] * A[1][1] - B[1] * A[0][1]) / detA;
+        const b = (A[0][0] * B[1] - A[1][0] * B[0]) / detA;
+
+        return { a, b, c: 0 }; // c is always 0 for origin constraint
+    }
+
+    createBestFitLine(data, xMin, xMax, xScale, yScale) {
+        const coefficients = this.calculateQuadraticRegression(data);
+        if (!coefficients) return null;
+
+        const { a, b, c } = coefficients;
+        
+        // Generate points for the curve
+        const steps = 50;
+        const stepSize = (xMax - xMin) / steps;
+        const pathPoints = [];
+
+        // Start from origin (0,0) and go to xMax
+        const actualSteps = Math.ceil((xMax - 0) / stepSize);
+        
+        // Always start at origin
+        pathPoints.push([xScale(0), yScale(0)]);
+        
+        for (let i = 1; i <= actualSteps; i++) {
+            const x = i * stepSize;
+            if (x > xMax) break;
+            
+            const y = a * x * x + b * x + c;
+            pathPoints.push([xScale(x), yScale(y)]);
+        }
+
+        if (pathPoints.length < 2) return null;
+
+        // Create SVG path element
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('class', 'chart-bestfit');
+        
+        let pathData = `M ${pathPoints[0][0]} ${pathPoints[0][1]}`;
+        for (let i = 1; i < pathPoints.length; i++) {
+            pathData += ` L ${pathPoints[i][0]} ${pathPoints[i][1]}`;
+        }
+        
+        path.setAttribute('d', pathData);
+        return path;
     }
 }
 
