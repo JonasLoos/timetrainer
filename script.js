@@ -5,6 +5,7 @@ class TimeTrainer {
         this.currentMode = 'estimation';
         this.audioContext = null;
         this.statistics = this.loadStatistics();
+        this.settings = this.loadSettings();
         this.currentGame = null;
         this.currentChartMode = 'estimation';
         
@@ -16,6 +17,7 @@ class TimeTrainer {
         this.initializeAudio();
         this.updateStatisticsDisplay();
         this.updateVisualization();
+        this.updateSettingsDisplay();
     }
 
     setupEventListeners() {
@@ -44,6 +46,13 @@ class TimeTrainer {
         document.getElementById('guess-slider').addEventListener('input', (e) => {
             document.getElementById('guess-value').textContent = parseFloat(e.target.value).toFixed(1);
         });
+
+        // Settings
+        document.getElementById('estimation-min').addEventListener('input', (e) => this.updateSetting('estimation', 'min', e.target.value));
+        document.getElementById('estimation-max').addEventListener('input', (e) => this.updateSetting('estimation', 'max', e.target.value));
+        document.getElementById('production-min').addEventListener('input', (e) => this.updateSetting('production', 'min', e.target.value));
+        document.getElementById('production-max').addEventListener('input', (e) => this.updateSetting('production', 'max', e.target.value));
+        document.getElementById('reset-settings').addEventListener('click', () => this.resetSettings());
     }
 
     async initializeAudio() {
@@ -96,8 +105,9 @@ class TimeTrainer {
         document.getElementById('start-estimation').style.display = 'inline-block';
         document.getElementById('estimation-input').style.display = 'none';
         document.getElementById('estimation-result').style.display = 'none';
-        document.getElementById('guess-slider').value = '5.0';
-        document.getElementById('guess-value').textContent = '5.0';
+        const middleValue = (this.settings.estimation.min + this.settings.estimation.max) / 2;
+        document.getElementById('guess-slider').value = middleValue;
+        document.getElementById('guess-value').textContent = middleValue.toFixed(1);
 
         // Production mode reset
         document.getElementById('production-status').textContent = 'Click "Start" to begin';
@@ -109,7 +119,7 @@ class TimeTrainer {
 
     // ESTIMATION MODE METHODS
     startEstimationGame() {
-        const targetTime = this.generateRandomTime(1, 15);
+        const targetTime = this.generateRandomTime(this.settings.estimation.min, this.settings.estimation.max);
         
         this.currentGame = {
             mode: 'estimation',
@@ -185,13 +195,14 @@ class TimeTrainer {
         document.getElementById('estimation-result').style.display = 'none';
         document.getElementById('start-estimation').style.display = 'inline-block';
         document.getElementById('estimation-status').textContent = 'Ready for next round!';
-        document.getElementById('guess-slider').value = '5.0';
-        document.getElementById('guess-value').textContent = '5.0';
+        const middleValue = (this.settings.estimation.min + this.settings.estimation.max) / 2;
+        document.getElementById('guess-slider').value = middleValue;
+        document.getElementById('guess-value').textContent = middleValue.toFixed(1);
     }
 
     // PRODUCTION MODE METHODS
     startProductionGame() {
-        const targetTime = this.generateRandomTime(3, 20);
+        const targetTime = this.generateRandomTime(this.settings.production.min, this.settings.production.max);
         
         this.currentGame = {
             mode: 'production',
@@ -724,6 +735,121 @@ class TimeTrainer {
         
         path.setAttribute('d', pathData);
         return path;
+    }
+
+    // SETTINGS METHODS
+    loadSettings() {
+        const defaultSettings = {
+            estimation: {
+                min: 1.0,
+                max: 15.0
+            },
+            production: {
+                min: 3.0,
+                max: 20.0
+            }
+        };
+
+        try {
+            const saved = localStorage.getItem('timetrainer-settings');
+            if (!saved) return defaultSettings;
+            
+            const loadedSettings = JSON.parse(saved);
+            
+            // Validate and merge with defaults
+            return {
+                estimation: {
+                    min: Math.max(0.5, Math.min(10, loadedSettings.estimation?.min || defaultSettings.estimation.min)),
+                    max: Math.max(5, Math.min(60, loadedSettings.estimation?.max || defaultSettings.estimation.max))
+                },
+                production: {
+                    min: Math.max(1, Math.min(15, loadedSettings.production?.min || defaultSettings.production.min)),
+                    max: Math.max(10, Math.min(120, loadedSettings.production?.max || defaultSettings.production.max))
+                }
+            };
+        } catch (error) {
+            console.warn('Failed to load settings:', error);
+            return defaultSettings;
+        }
+    }
+
+    saveSettings() {
+        try {
+            localStorage.setItem('timetrainer-settings', JSON.stringify(this.settings));
+        } catch (error) {
+            console.warn('Failed to save settings:', error);
+        }
+    }
+
+    updateSetting(mode, type, value) {
+        const numValue = parseFloat(value);
+        this.settings[mode][type] = numValue;
+        
+        // Ensure min <= max
+        if (type === 'min' && numValue >= this.settings[mode].max) {
+            this.settings[mode].max = numValue + 0.1;
+            document.getElementById(`${mode}-max`).value = this.settings[mode].max;
+            document.getElementById(`${mode}-max-value`).textContent = this.settings[mode].max.toFixed(1);
+        } else if (type === 'max' && numValue <= this.settings[mode].min) {
+            this.settings[mode].min = numValue - 0.1;
+            document.getElementById(`${mode}-min`).value = this.settings[mode].min;
+            document.getElementById(`${mode}-min-value`).textContent = this.settings[mode].min.toFixed(1);
+        }
+        
+        document.getElementById(`${mode}-${type}-value`).textContent = numValue.toFixed(1);
+        this.saveSettings();
+        
+        // Update guess slider range if estimation settings changed
+        if (mode === 'estimation') {
+            this.updateGuessSliderRange();
+        }
+    }
+
+    updateSettingsDisplay() {
+        // Update estimation settings
+        document.getElementById('estimation-min').value = this.settings.estimation.min;
+        document.getElementById('estimation-min-value').textContent = this.settings.estimation.min.toFixed(1);
+        document.getElementById('estimation-max').value = this.settings.estimation.max;
+        document.getElementById('estimation-max-value').textContent = this.settings.estimation.max.toFixed(1);
+
+        // Update production settings
+        document.getElementById('production-min').value = this.settings.production.min;
+        document.getElementById('production-min-value').textContent = this.settings.production.min.toFixed(1);
+        document.getElementById('production-max').value = this.settings.production.max;
+        document.getElementById('production-max-value').textContent = this.settings.production.max.toFixed(1);
+
+        // Update guess slider range to match estimation settings
+        this.updateGuessSliderRange();
+    }
+
+    updateGuessSliderRange() {
+        const guessSlider = document.getElementById('guess-slider');
+        const minLabel = document.getElementById('guess-min-label');
+        const maxLabel = document.getElementById('guess-max-label');
+        
+        guessSlider.min = this.settings.estimation.min;
+        guessSlider.max = this.settings.estimation.max;
+        minLabel.textContent = `${this.settings.estimation.min.toFixed(1)}s`;
+        maxLabel.textContent = `${this.settings.estimation.max.toFixed(1)}s`;
+        
+        // Reset slider value to middle if outside new range
+        const currentValue = parseFloat(guessSlider.value);
+        if (currentValue < this.settings.estimation.min || currentValue > this.settings.estimation.max) {
+            const middleValue = (this.settings.estimation.min + this.settings.estimation.max) / 2;
+            guessSlider.value = middleValue;
+            document.getElementById('guess-value').textContent = middleValue.toFixed(1);
+        }
+    }
+
+    resetSettings() {
+        if (confirm('Reset all settings to default values?')) {
+            this.settings = {
+                estimation: { min: 1.0, max: 15.0 },
+                production: { min: 3.0, max: 20.0 }
+            };
+            this.saveSettings();
+            this.updateSettingsDisplay();
+        }
     }
 }
 

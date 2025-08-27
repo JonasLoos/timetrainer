@@ -35,9 +35,9 @@
                     <div id="estimation-input" class="input-section" style="display: none;">
                         <label for="guess-slider">Your guess: <span id="guess-value">5.0</span> seconds</label>
                         <div class="slider-container">
-                            <span class="slider-min">1s</span>
+                            <span class="slider-min" id="guess-min-label">1s</span>
                             <input type="range" id="guess-slider" min="1" max="20" step="0.1" value="5.0">
-                            <span class="slider-max">20s</span>
+                            <span class="slider-max" id="guess-max-label">20s</span>
                         </div>
                         <button id="submit-guess" class="action-btn primary">Submit Guess</button>
                     </div>
@@ -124,6 +124,53 @@
             </div>
             
             <button id="reset-stats" class="action-btn secondary">Reset Statistics</button>
+        </div>
+
+        <div class="settings">
+            <h3>⚙️ Settings</h3>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h4>🎧 Estimation Mode</h4>
+                    <div class="setting-item">
+                        <label for="estimation-min">Min Time: <span id="estimation-min-value">1.0</span>s</label>
+                        <div class="slider-container">
+                            <span class="slider-min">0.1s</span>
+                            <input type="range" id="estimation-min" min="0.1" max="20" step="0.1" value="1.0">
+                            <span class="slider-max">20s</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="estimation-max">Max Time: <span id="estimation-max-value">15.0</span>s</label>
+                        <div class="slider-container">
+                            <span class="slider-min">1s</span>
+                            <input type="range" id="estimation-max" min="1" max="20" step="0.1" value="15.0">
+                            <span class="slider-max">20s</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <h4>👆 Production Mode</h4>
+                    <div class="setting-item">
+                        <label for="production-min">Min Time: <span id="production-min-value">3.0</span>s</label>
+                        <div class="slider-container">
+                            <span class="slider-min">0.1s</span>
+                            <input type="range" id="production-min" min="0.1" max="20" step="0.1" value="3.0">
+                            <span class="slider-max">20s</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="production-max">Max Time: <span id="production-max-value">20.0</span>s</label>
+                        <div class="slider-container">
+                            <span class="slider-min">1s</span>
+                            <input type="range" id="production-max" min="1" max="20" step="0.1" value="20.0">
+                            <span class="slider-max">20s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-actions">
+                <button id="reset-settings" class="action-btn secondary">Reset to Defaults</button>
+            </div>
         </div>
     </div>
 
