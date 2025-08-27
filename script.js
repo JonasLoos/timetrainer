@@ -53,8 +53,6 @@ class TimeTrainer {
         document.getElementById('production-min').addEventListener('input', (e) => this.updateSetting('production', 'min', e.target.value));
         document.getElementById('production-max').addEventListener('input', (e) => this.updateSetting('production', 'max', e.target.value));
         document.getElementById('reset-settings').addEventListener('click', () => this.resetSettings());
-
-        // Cache management
         document.getElementById('clear-cache').addEventListener('click', () => this.clearCacheAndRefresh());
     }
 
@@ -855,45 +853,43 @@ class TimeTrainer {
         }
     }
 
-    // CACHE MANAGEMENT METHODS
     async clearCacheAndRefresh() {
-        const button = document.getElementById('clear-cache');
-        const originalText = button.textContent;
+        if (confirm('This will clear all cached data and refresh the app. Continue?')) {
+            try {
+                // Clear all localStorage data
+                localStorage.clear();
 
-        try {
-            // Update button to show progress
-            button.textContent = '⏳ Clearing cache...';
-            button.disabled = true;
+                // Clear service worker caches
+                if ('serviceWorker' in navigator) {
+                    const registration = await navigator.serviceWorker.ready;
+                    if (registration.active) {
+                        // Send message to service worker to clear all caches
+                        registration.active.postMessage({ type: 'CLEAR_CACHE' });
 
-            // Send message to service worker to clear all caches
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+                        // Wait a moment for cache clearing to complete
+                        await new Promise(resolve => setTimeout(resolve, 500));
 
-                // Wait a bit for cache clearing
-                await new Promise(resolve => setTimeout(resolve, 500));
-            }
+                        // Unregister service worker to ensure fresh start
+                        await registration.unregister();
+                    }
+                }
 
-            // Clear local storage as well
-            localStorage.clear();
+                // Clear browser caches and force complete reload
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(
+                        cacheNames.map(cacheName => caches.delete(cacheName))
+                    );
+                }
 
-            // Update button text
-            button.textContent = '✅ Cache cleared! Refreshing...';
-
-            // Wait a moment then refresh
-            setTimeout(() => {
+                // Force hard refresh with cache bypass
                 window.location.reload(true);
-            }, 1000);
 
-        } catch (error) {
-            console.error('Failed to clear cache:', error);
-            button.textContent = '❌ Error - Try again';
-            button.disabled = false;
-
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-            }, 3000);
+            } catch (error) {
+                console.error('Error clearing cache:', error);
+                // Fallback: just reload with cache bypass
+                window.location.reload(true);
+            }
         }
     }
 }
