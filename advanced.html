@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced Time Perception Training">
+    <meta name="theme-color" content="#4f46e5">
+    <title>Time Trainer - Advanced Mode</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏱️</text></svg>">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Statistics */
+        .stats {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 16px rgba(31, 38, 135, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .stat-item {
+            font-size: 1rem;
+        }
+
+        .stat-item span {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Game Container */
+        .game-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+            min-height: 400px;
+        }
+
+        /* Game Button States */
+        .game-button {
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            height: 180px; /* Fixed height for consistency */
+            min-height: 180px;
+        }
+
+        .game-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-button:active {
+            transform: translateY(0);
+        }
+
+        /* Button States */
+        .game-button.inactive,
+        .game-button.waiting {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            color: #6c757d;
+            cursor: wait;
+        }
+
+        .game-button.waiting {
+            cursor: pointer; /* Only difference - clickable */
+        }
+
+        .game-button.showing-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            animation: pulse 0.5s ease-in-out;
+            font-size: 2.5rem; /* Much larger font for the number */
+        }
+
+        .game-button.showing-result {
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .game-button.showing-result.success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .game-button.showing-result.good {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        }
+
+        .game-button.showing-result.poor {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(108, 117, 125, 0.3);
+            border-top: 4px solid #6c757d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .back-link {
+                top: 15px;
+                left: 15px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            header {
+                padding: 15px;
+                margin-top: 40px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .game-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                min-height: 600px;
+            }
+
+            .game-button {
+                height: 140px; /* Smaller height on mobile */
+                min-height: 140px;
+            }
+
+            .game-button.showing-number {
+                font-size: 2rem; /* Slightly smaller on mobile */
+            }
+
+            .spinner {
+                width: 30px;
+                height: 30px;
+                border-width: 3px;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .game-button {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .game-container {
+                padding: 20px;
+            }
+
+            .game-button {
+                font-size: 1rem;
+                height: 120px; /* Even smaller height on very small screens */
+                min-height: 120px;
+            }
+
+            .game-button.showing-number {
+                font-size: 1.8rem; /* Proportionally smaller on very small screens */
+            }
+
+            .spinner {
+                width: 25px;
+                height: 25px;
+                border-width: 2px;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .stats {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back</a>
+    
+    <div class="container">
+        <header>
+            <h1>🚀 Advanced Mode</h1>
+            <p class="subtitle">Four parallel time estimation challenges</p>
+        </header>
+
+        <div class="stats">
+            <h3>📊 Statistics</h3>
+            <div class="stats-row">
+                <div class="stat-item">Guesses: <span id="total-guesses">0</span></div>
+                <div class="stat-item">Average Error: <span id="average-error">0.0s</span></div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="game-grid">
+                <button class="game-button inactive" id="game-1">
+                    <span class="button-text"><div class="spinner"></div></span>
+                </button>
+                <button class="game-button inactive" id="game-2">
+                    <span class="button-text"><div class="spinner"></div></span>
+                </button>
+                <button class="game-button inactive" id="game-3">
+                    <span class="button-text"><div class="spinner"></div></span>
+                </button>
+                <button class="game-button inactive" id="game-4">
+                    <span class="button-text"><div class="spinner"></div></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="advanced.js"></script>
+</body>
+</html>

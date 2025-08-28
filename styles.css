@@ -480,6 +480,36 @@ header h1 {
     background: #ff6b6b;
 }
 
+/* Advanced Mode Link */
+.advanced-mode-link {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.advanced-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.advanced-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 107, 107, 0.4);
+}
+
+.advanced-btn:active {
+    transform: translateY(0);
+}
+
 /* Settings */
 .settings {
     background: rgba(255, 255, 255, 0.95);
