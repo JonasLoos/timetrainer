@@ -1,4 +1,4 @@
-# Time Trainer PWA
+# Time Trainer
 
 A Progressive Web App for training your time perception skills with two interactive game modes.
 
@@ -30,16 +30,6 @@ The app tracks your performance including:
 
 All statistics are stored locally in your browser.
 
-## Deployment with CapRover
-
-This app is ready to deploy with CapRover. Simply:
-
-1. Create a new app in your CapRover dashboard
-2. Upload this directory or connect to your git repository
-3. CapRover will automatically build and deploy using the included `captain-definition` and `Dockerfile`
-
-The app will be served using nginx with PWA-optimized headers and caching.
-
 ## Local Development
 
 To run locally:
@@ -63,13 +53,3 @@ When accessed via HTTPS, users can install this app on their devices:
 - Modern browsers with Web Audio API support
 - Service Worker support for offline functionality
 - Local Storage for statistics persistence
-
-## Files Structure
-
-- `index.html` - Main application HTML
-- `styles.css` - Styling and responsive design
-- `script.js` - Game logic and PWA functionality
-- `manifest.json` - PWA manifest file
-- `sw.js` - Service worker for offline support
-- `captain-definition` - CapRover deployment configuration
-- `Dockerfile` - Docker container setup with nginx
